@@ -5,7 +5,7 @@ import users from "../fixtures/users.json"
 describe('user endpoint ', () => {
 
   context("when i send Post/ Rgesiter User endpoint to register a user ", () => {
-    it.skip("Then I should be able to create a new user with status 201 ", () => {
+    it("Then I should be able to create a new user with status 201 ", () => {
       cy.request({
         method: "POST",
         url: `${Cypress.env('APIBaseUrl')}/auth/register`,
@@ -138,7 +138,7 @@ describe('user endpoint ', () => {
 
 
   context("When User UserExistInDb2  send Get/SingleUser endpoint for User UserExistInDb1  And  UserExistInDb2 not Admin  ", () => {
-    it.skip("Given Register UserExistInDb2 ", () => {
+    it("Given Register UserExistInDb2 ", () => {
       cy.request({
         method: "POST",
         url: `${Cypress.env('APIBaseUrl')}/auth/register`,
@@ -232,6 +232,39 @@ describe('user endpoint ', () => {
         .then((response) => {
           expect(response.status).to.eq(403)
           expect(response.body).to.eq("token not valid !")
+        })
+    })
+  })
+
+  context("delete all users ", () => {
+    it("delete user1", () => {
+      cy.request({
+        method: "DELETE",
+        url: `${Cypress.env('APIBaseUrl')}/user/${Cypress.env("id User")}`,
+        headers: {
+          token: `bearer ${Cypress.env("AccessToken")}`
+        },
+        failOnStatusCode: false
+
+      })
+        .then((response) => {
+          expect(response.status).to.eq(200)
+          expect(response.body).to.eq("User Deleted")
+        })
+    })
+    it("delete user2", () => {
+      cy.request({
+        method: "DELETE",
+        url: `${Cypress.env('APIBaseUrl')}/user/${Cypress.env("id User2")}`,
+        headers: {
+          token: `bearer ${Cypress.env("AccessToken2")}`
+        },
+        failOnStatusCode: false
+
+      })
+        .then((response) => {
+          expect(response.status).to.eq(200)
+          expect(response.body).to.eq("User Deleted")
         })
     })
   })
