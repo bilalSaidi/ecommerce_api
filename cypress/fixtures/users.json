@@ -1,0 +1,15 @@
+{
+  "UserNotExistInDb": {
+    "email": "another55@gmail.com"
+  },
+  "UserExistInDb1": {
+    "username": "another",
+    "isAdmin": true,
+    "email": "another@gmail.com"
+  },
+  "UserExistInDb2": {
+    "username": "another2",
+    "isAdmin": false,
+    "email": "another2@gmail.com"
+  }
+}
