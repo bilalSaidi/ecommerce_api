@@ -190,6 +190,51 @@ describe('user endpoint ', () => {
         })
     })
   })
+
+
+  context("When I send Put / UpdateUser endpoint with the right access token ", () => {
+    it("Then I should able to update user data ", () => {
+      cy.request({
+        method: "PUT",
+        url: `${Cypress.env('APIBaseUrl')}/user/${Cypress.env("id User")}`,
+        headers: {
+          token: `bearer ${Cypress.env("AccessToken")}`
+        },
+        body: {
+          "username": "bilal saidi"
+        },
+        failOnStatusCode: false
+
+      })
+        .then((response) => {
+          expect(response.status).to.eq(200)
+          expect(response.body._id).to.eq(Cypress.env("id User"))
+          expect(response.body.email).to.eq(users.UserExistInDb1.email)
+          expect(response.body.username).to.eq("bilal saidi")
+        })
+    })
+  })
+
+  context("When I send Put / UpdateUser endpoint with the wrong access token ", () => {
+    it("Then I should able to receive error msg ", () => {
+      cy.request({
+        method: "PUT",
+        url: `${Cypress.env('APIBaseUrl')}/user/${Cypress.env("id User")}`,
+        headers: {
+          token: `Bearer eyJhbGciOiJIUzI1NiIsI1OTY5OTcwMH0.ImUzw_5CkRAngw6FhOC5zrv-OkS7HUkJgFXeE84RAcg`
+        },
+        body: {
+          "username": "bilal saidi"
+        },
+        failOnStatusCode: false
+
+      })
+        .then((response) => {
+          expect(response.status).to.eq(403)
+          expect(response.body).to.eq("token not valid !")
+        })
+    })
+  })
 })
 
 
