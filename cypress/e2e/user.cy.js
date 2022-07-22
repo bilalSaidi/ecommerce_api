@@ -236,7 +236,8 @@ describe('user endpoint ', () => {
     })
   })
 
-  context("delete all users ", () => {
+
+  context("When I finish the test script delete all users ", () => {
     it("delete user1", () => {
       cy.request({
         method: "DELETE",
